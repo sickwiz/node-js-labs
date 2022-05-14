@@ -24,7 +24,8 @@
     "x-xss-protection": "^2.0.0"
   },
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "build:""
   },
   "name": "vuln-nodejs-app",
   "version": "1.0.0",
