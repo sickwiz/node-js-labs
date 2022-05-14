@@ -36,7 +36,6 @@ services:
   nodeapp:
     container_name: vuln_nodejs_app
     build: .
-    image: payatu/vuln_nodejs_app
     volumes:
       - .:/code
     ports:
