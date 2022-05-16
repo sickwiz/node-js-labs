@@ -3,8 +3,8 @@ const vuln_controller = require("../controllers/vuln_controller");
 const router = express.Router();
 const auth_controller = require('../controllers/auth_controller');
 const { authenticateToken } = require('../controllers/auth_controller');
-const { schema }  = require('../models/graphql-schema')
-const { graphqlHTTP } = require('express-graphql')
+// const { schema }  = require('../models/graphql-schema')
+// const { graphqlHTTP } = require('express-graphql')
 
 router.get('/', authenticateToken, vuln_controller.app_index);
 
@@ -95,15 +95,15 @@ router.route('/cors-csrf-edit-password')
     .post(authenticateToken, vuln_controller.cors_csrf_edit_password_post)
     .options(vuln_controller.cors_csrf_edit_password_option);
 
-router.route('/setup-totp')
-    .get(authenticateToken, vuln_controller.totp_setup_get)
-    .post(authenticateToken, vuln_controller.totp_setup_post);
+// router.route('/setup-totp')
+//     .get(authenticateToken, vuln_controller.totp_setup_get)
+//     .post(authenticateToken, vuln_controller.totp_setup_post);
 
-router.route('/totp-verification')
-    .get(authenticateToken, vuln_controller.login_totp_verification_get)
-    .post(authenticateToken, vuln_controller.login_totp_verification_post);
+// router.route('/totp-verification')
+//     .get(authenticateToken, vuln_controller.login_totp_verification_get)
+//     .post(authenticateToken, vuln_controller.login_totp_verification_post);
 
-router.post('/disable-totp', authenticateToken, vuln_controller.totp_disable_post);
+// router.post('/disable-totp', authenticateToken, vuln_controller.totp_disable_post);
 
 router.get('/cross-site-websocket-hijacking', authenticateToken, vuln_controller.websocket_hijacking_get);
 
@@ -113,37 +113,37 @@ router.route('/react*')
     .get(authenticateToken, vuln_controller.react_xss_get)
     .post(vuln_controller.react_xss_post);
 
-router.route('/mongodb-notes')
-    .get(authenticateToken, vuln_controller.mongodb_notes_get)
-    .post(authenticateToken, vuln_controller.mongodb_save_notes_post)
+// router.route('/mongodb-notes')
+//     .get(authenticateToken, vuln_controller.mongodb_notes_get)
+//     .post(authenticateToken, vuln_controller.mongodb_save_notes_post)
 
-router.route('/mongodb-notes/show-notes')
-    .post(authenticateToken, vuln_controller.mongodb_show_notes_post);
+// router.route('/mongodb-notes/show-notes')
+//     .post(authenticateToken, vuln_controller.mongodb_show_notes_post);
 
 // GraphQL rotuer
-router.use('/graphql', authenticateToken, graphqlHTTP({
-    schema: schema,
-    rootValue: vuln_controller.graphqlroot
-}))
+// router.use('/graphql', authenticateToken, graphqlHTTP({
+//     schema: schema,
+//     rootValue: vuln_controller.graphqlroot
+// }))
 
-router.get('/graphql-user-profile', authenticateToken, vuln_controller.graphql_user_profile_get);
+// router.get('/graphql-user-profile', authenticateToken, vuln_controller.graphql_user_profile_get);
 
-router.get('/graphql-information-disclosure', authenticateToken, vuln_controller.graphql_information_disclosure_get);
+// router.get('/graphql-information-disclosure', authenticateToken, vuln_controller.graphql_information_disclosure_get);
 
-router.get('/graphql-update-profile', authenticateToken, vuln_controller.graphql_update_profile_get);
+// router.get('/graphql-update-profile', authenticateToken, vuln_controller.graphql_update_profile_get);
 
-router.get('/graphql-idor-show-profile', authenticateToken, vuln_controller.graphql_idor_get);
+// router.get('/graphql-idor-show-profile', authenticateToken, vuln_controller.graphql_idor_get);
 
 router.route('/svg-xss')
     .get(authenticateToken, vuln_controller.svg_xss_get)
     .post(authenticateToken, vuln_controller.svg_xss_fileupload_post);
 
-router.get('/jsonp-injection', authenticateToken, vuln_controller.jsonp_injection_get);
+// router.get('/jsonp-injection', authenticateToken, vuln_controller.jsonp_injection_get);
 
-router.get('/jsonp-injection/wallet-usd-balance', authenticateToken, vuln_controller.jsonp_wallet_get);
+// router.get('/jsonp-injection/wallet-usd-balance', authenticateToken, vuln_controller.jsonp_wallet_get);
 
-router.get('/nosql-js-injection', authenticateToken, vuln_controller.nosql_javascript_injection_get);
+// router.get('/nosql-js-injection', authenticateToken, vuln_controller.nosql_javascript_injection_get);
 
-router.post('/unlock-secret', authenticateToken, vuln_controller.secret_post);
+// router.post('/unlock-secret', authenticateToken, vuln_controller.secret_post);
 
 module.exports = router;

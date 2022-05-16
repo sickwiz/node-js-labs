@@ -11,7 +11,7 @@ const { Op, Sequelize } = require('sequelize')
 const md5 = require('md5');
 const twofactor = require('node-2fa');
 const path = require('path');
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
 
 var con = mysql.createConnection({
@@ -485,124 +485,124 @@ const react_xss_options = (req, res) => {
     res.send(200);
 }
 
-if (process.env.MONGODB_ADMINUSERNAME != '' && process.env.MONGODB_ADMINPASSWORD != '') {
-    var dbURL = `mongodb://${process.env.MONGODB_ADMINUSERNAME}:${process.env.MONGODB_ADMINPASSWORD}@${process.env.MONGODB_SERVER}:27017/`;
-} else {
-    var dbURL = 'mongodb://localhost:27017/';
-}
+// if (process.env.MONGODB_ADMINUSERNAME != '' && process.env.MONGODB_ADMINPASSWORD != '') {
+//     var dbURL = `mongodb://${process.env.MONGODB_ADMINUSERNAME}:${process.env.MONGODB_ADMINPASSWORD}@${process.env.MONGODB_SERVER}:27017/`;
+// } else {
+//     var dbURL = 'mongodb://localhost:27017/';
+// }
 
-const mongodb_config = { connectTimeoutMS: 2000 };
+// const mongodb_config = { connectTimeoutMS: 2000 };
 
-MongoClient.connect(dbURL, mongodb_config, (err, db) => {
-    if (err) return console.log("MongoDB connection error: NoSQL exercise will not work " + err)
-    const dbo = db.db('vuln_nodejs_app')
-    dbo.dropCollection('mongodb-notes', (err, deleted) => {
-        if (deleted) console.log('Dropping old mongodb collection')
-    })
-    dbo.collection('mongodb-notes').insertOne({ username: "SuperSecretUser", noteTitle: "SuperSecretNote", noteBody: "YOU HAVE SOLVED THE CHALLENGE" }, (err, result) => {
-        if (err) return console.log('Internal Error: unable to insert data into mongodb-notes collection');
-    })
-    dbo.dropCollection('secret', (err, deleted) => {
-        if (deleted) console.log('Dropping old mongodb collection')
-    })
-    dbo.collection('secret').insertOne({ password: "SuperSecretPassword!!", flag: "$flag{You_have_solved_this_exercise}" }, (err, result) => {
-        if (err) return console.log('Internal Error: unable to insert data into mongodb-notes collection');
-    })
-})
+// MongoClient.connect(dbURL, mongodb_config, (err, db) => {
+//     if (err) return console.log("MongoDB connection error: NoSQL exercise will not work " + err)
+//     const dbo = db.db('vuln_nodejs_app')
+//     dbo.dropCollection('mongodb-notes', (err, deleted) => {
+//         if (deleted) console.log('Dropping old mongodb collection')
+//     })
+//     dbo.collection('mongodb-notes').insertOne({ username: "SuperSecretUser", noteTitle: "SuperSecretNote", noteBody: "YOU HAVE SOLVED THE CHALLENGE" }, (err, result) => {
+//         if (err) return console.log('Internal Error: unable to insert data into mongodb-notes collection');
+//     })
+//     dbo.dropCollection('secret', (err, deleted) => {
+//         if (deleted) console.log('Dropping old mongodb collection')
+//     })
+//     dbo.collection('secret').insertOne({ password: "SuperSecretPassword!!", flag: "$flag{You_have_solved_this_exercise}" }, (err, result) => {
+//         if (err) return console.log('Internal Error: unable to insert data into mongodb-notes collection');
+//     })
+// })
 
-const mongodb_notes_get = (req, res) => {
-    res.render('mongodb-notes', {
-        username: req.user.username
-    });
-}
+// const mongodb_notes_get = (req, res) => {
+//     res.render('mongodb-notes', {
+//         username: req.user.username
+//     });
+// }
 
-const mongodb_save_notes_post = (req, res) => {
-    const noteObj = { username: req.user.username, noteTitle: req.body.noteTitle, noteBody: req.body.noteBody }
-    MongoClient.connect(dbURL, mongodb_config, (err, db) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send('Internal error!')
-        }
-        dbo = db.db('vuln_nodejs_app');
-        dbo.collection('mongodb-notes').insertOne(noteObj, (err, result) => {
-            if (err) return res.status(500).send('Internal error!');
-            res.send({ "success": "true" })
-        })
-    })
-}
+// const mongodb_save_notes_post = (req, res) => {
+//     const noteObj = { username: req.user.username, noteTitle: req.body.noteTitle, noteBody: req.body.noteBody }
+//     MongoClient.connect(dbURL, mongodb_config, (err, db) => {
+//         if (err) {
+//             console.log(err);
+//             res.status(500).send('Internal error!')
+//         }
+//         dbo = db.db('vuln_nodejs_app');
+//         dbo.collection('mongodb-notes').insertOne(noteObj, (err, result) => {
+//             if (err) return res.status(500).send('Internal error!');
+//             res.send({ "success": "true" })
+//         })
+//     })
+// }
 
-const mongodb_show_notes_post = (req, res) => {
-    MongoClient.connect(dbURL, mongodb_config, (err, client) => {
-        if (err) return res.status('500').send('MongoDB is not installed, Please follow the installation guideline.');
-        const db = client.db('vuln_nodejs_app')
-        db.collection('mongodb-notes').find({ username: req.body.username }).toArray()
-            .then((notes) => {
-                res.send(notes)
-            }).catch((err) => {
-                res.status(500).send('Internal error!');
-            })
-    })
-}
+// const mongodb_show_notes_post = (req, res) => {
+//     MongoClient.connect(dbURL, mongodb_config, (err, client) => {
+//         if (err) return res.status('500').send('MongoDB is not installed, Please follow the installation guideline.');
+//         const db = client.db('vuln_nodejs_app')
+//         db.collection('mongodb-notes').find({ username: req.body.username }).toArray()
+//             .then((notes) => {
+//                 res.send(notes)
+//             }).catch((err) => {
+//                 res.status(500).send('Internal error!');
+//             })
+//     })
+// }
 
 // GrqphQl root
-const graphqlroot = {
-    user: graphql_GetUser,
-    listUsers: graphql_AllUsers,
-    updateProfile: graphql_UpdateProfile,
-    showProfile: graphql_ShowProfile
-}
+// const graphqlroot = {
+//     user: graphql_GetUser,
+//     listUsers: graphql_AllUsers,
+//     updateProfile: graphql_UpdateProfile,
+//     showProfile: graphql_ShowProfile
+// }
 
-async function graphql_GetUser(arg) {
-    const username = arg.username
-    const q = "SELECT * FROM users where username='" + username + "';";
-    await con.connect()
-    const userdata = await con.promise().query(q)
-    return userdata[0][0]
-}
+// async function graphql_GetUser(arg) {
+//     const username = arg.username
+//     const q = "SELECT * FROM users where username='" + username + "';";
+//     await con.connect()
+//     const userdata = await con.promise().query(q)
+//     return userdata[0][0]
+// }
 
-async function graphql_AllUsers() {
-    const q = "SELECT username, email from users;"
-    await con.connect()
-    const userdata = await con.promise().query(q)
-    return userdata[0]
-}
+// async function graphql_AllUsers() {
+//     const q = "SELECT username, email from users;"
+//     await con.connect()
+//     const userdata = await con.promise().query(q)
+//     return userdata[0]
+// }
 
-async function graphql_UpdateProfile(args, req) {
-    const updateQuery = `UPDATE users SET email='${args.email}', password='${md5(args.password)}' WHERE username = '${req.user.username}';`
-    await con.connect()
-    const updateResult = await con.promise().query(updateQuery)
-    const updateStatus = JSON.stringify(updateResult[0].affectedRows) // returns update status
-    return "Update Successful!"
-}
+// async function graphql_UpdateProfile(args, req) {
+//     const updateQuery = `UPDATE users SET email='${args.email}', password='${md5(args.password)}' WHERE username = '${req.user.username}';`
+//     await con.connect()
+//     const updateResult = await con.promise().query(updateQuery)
+//     const updateStatus = JSON.stringify(updateResult[0].affectedRows) // returns update status
+//     return "Update Successful!"
+// }
 
-async function graphql_ShowProfile(args) {
-    const userid = args.userid
-    const q = "SELECT * FROM users where id='" + userid + "';";
-    await con.connect()
-    const userdata = await con.promise().query(q)
-    return userdata[0][0]
-}
+// async function graphql_ShowProfile(args) {
+//     const userid = args.userid
+//     const q = "SELECT * FROM users where id='" + userid + "';";
+//     await con.connect()
+//     const userdata = await con.promise().query(q)
+//     return userdata[0][0]
+// }
 
-const graphql_user_profile_get = (req, res) => {
-    res.render('graphql-user-profile', {
-        username: req.user.username
-    });
-}
-const graphql_information_disclosure_get = (req, res) => {
-    res.render('graphql-information-disclosure')
-}
+// const graphql_user_profile_get = (req, res) => {
+//     res.render('graphql-user-profile', {
+//         username: req.user.username
+//     });
+// }
+// const graphql_information_disclosure_get = (req, res) => {
+//     res.render('graphql-information-disclosure')
+// }
 
-const graphql_update_profile_get = (req, res) => {
-    res.render('graphql-update-profile', {
-        username: req.user.username
-    })
-}
+// const graphql_update_profile_get = (req, res) => {
+//     res.render('graphql-update-profile', {
+//         username: req.user.username
+//     })
+// }
 
-const graphql_idor_get = (req, res) => {
-    res.render('graphql-idor-show-profile', {
-        userid: req.user.id
-    })
-}
+// const graphql_idor_get = (req, res) => {
+//     res.render('graphql-idor-show-profile', {
+//         userid: req.user.id
+//     })
+// }
 
 const svg_xss_get = (req, res) => {
     var profilePic = req.user.profilePic
@@ -660,50 +660,50 @@ const svg_xss_fileupload_post = (req, res) => {
     })
 }
 
-const jsonp_injection_get = (req, res) => {
-    Wallet.findOne({ where: { username: req.user.username } }, { attributes: ['BTC', 'ETH'] })
-        .then((crypto_balance) => {
-            res.render('jsonp-injection', {
-                BTC: crypto_balance.BTC,
-                ETH: crypto_balance.ETH
-            });
-        })
-}
+// const jsonp_injection_get = (req, res) => {
+//     Wallet.findOne({ where: { username: req.user.username } }, { attributes: ['BTC', 'ETH'] })
+//         .then((crypto_balance) => {
+//             res.render('jsonp-injection', {
+//                 BTC: crypto_balance.BTC,
+//                 ETH: crypto_balance.ETH
+//             });
+//         })
+// }
 
-const jsonp_wallet_get = (req, res) => {
-    Wallet.findOne({ where: { username: req.user.username } }, { attributes: ['BTC', 'ETH'] })
-        .then((crypto_balance) => {
-            const bitcoin_quantity = crypto_balance.BTC;
-            const ethereum_quantity = crypto_balance.ETH;
-            const request = require('request')
-            request('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum&vs_currencies=usd', { json: true }, (err, response, body) => {
-                if (err) { return console.log(err); }
-                const bitcoin_usd_value = bitcoin_quantity * body.bitcoin.usd + Math.floor(Math.random() * 100);
-                const ethereum_usd_value = ethereum_quantity * body.ethereum.usd + Math.floor(Math.random() * 100);
-                const total_usd_value = bitcoin_usd_value + ethereum_usd_value + Math.floor(Math.random() * 100);
-                const data = { username: req.user.username, btc: bitcoin_usd_value, eth: ethereum_usd_value, total: total_usd_value }
-                res.jsonp(data)
-            })
-        })
-}
+// const jsonp_wallet_get = (req, res) => {
+//     Wallet.findOne({ where: { username: req.user.username } }, { attributes: ['BTC', 'ETH'] })
+//         .then((crypto_balance) => {
+//             const bitcoin_quantity = crypto_balance.BTC;
+//             const ethereum_quantity = crypto_balance.ETH;
+//             const request = require('request')
+//             request('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum&vs_currencies=usd', { json: true }, (err, response, body) => {
+//                 if (err) { return console.log(err); }
+//                 const bitcoin_usd_value = bitcoin_quantity * body.bitcoin.usd + Math.floor(Math.random() * 100);
+//                 const ethereum_usd_value = ethereum_quantity * body.ethereum.usd + Math.floor(Math.random() * 100);
+//                 const total_usd_value = bitcoin_usd_value + ethereum_usd_value + Math.floor(Math.random() * 100);
+//                 const data = { username: req.user.username, btc: bitcoin_usd_value, eth: ethereum_usd_value, total: total_usd_value }
+//                 res.jsonp(data)
+//             })
+//         })
+// }
 
-const nosql_javascript_injection_get = (req, res) => {
-    res.render('nosql-javascript-injection')
-}
+// const nosql_javascript_injection_get = (req, res) => {
+//     res.render('nosql-javascript-injection')
+// }
 
-const secret_post = (req, res) => {
-    MongoClient.connect(dbURL, mongodb_config, (err, client) => {
-        if (err) return res.status('500').send('MongoDB is not installed, Please follow the installation guideline.');
-        const db = client.db('vuln_nodejs_app')
-        db.collection('secret').find({ $where: "this.password =='"+req.body.password+"'"}).toArray()
-            .then((secret) => {
-                if (secret.length == 0) return res.status(403).send('Incorrect password!')
-                res.send(secret[0].flag)
-            }).catch((err) => {
-                res.status(500).send('Internal server error!');
-            })
-    })
-}
+// const secret_post = (req, res) => {
+//     MongoClient.connect(dbURL, mongodb_config, (err, client) => {
+//         if (err) return res.status('500').send('MongoDB is not installed, Please follow the installation guideline.');
+//         const db = client.db('vuln_nodejs_app')
+//         db.collection('secret').find({ $where: "this.password =='"+req.body.password+"'"}).toArray()
+//             .then((secret) => {
+//                 if (secret.length == 0) return res.status(403).send('Incorrect password!')
+//                 res.send(secret[0].flag)
+//             }).catch((err) => {
+//                 res.status(500).send('Internal server error!');
+//             })
+//     })
+// }
 
 
 module.exports = {
@@ -757,18 +757,6 @@ module.exports = {
     react_xss_get,
     react_xss_options,
     react_xss_post,
-    mongodb_notes_get,
-    mongodb_save_notes_post,
-    mongodb_show_notes_post,
-    graphql_user_profile_get,
-    graphqlroot,
-    graphql_information_disclosure_get,
-    graphql_update_profile_get,
-    graphql_idor_get,
     svg_xss_get,
     svg_xss_fileupload_post,
-    jsonp_injection_get,
-    jsonp_wallet_get,
-    nosql_javascript_injection_get,
-    secret_post
 }
